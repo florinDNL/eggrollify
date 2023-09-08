@@ -1,5 +1,5 @@
 # Eggrollify
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/florinDNL/eggrollify/blob/main/License)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/florinDNL/eggrollify/blob/main/LICENSE)
 
 Script to download and install, list and remove Proton-GE-Custom builds
 

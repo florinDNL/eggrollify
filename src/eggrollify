@@ -3,4 +3,4 @@
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 cd $SCRIPT_DIR
 
-python "eggrollify.py" "$@"
+python3 "eggrollify.py" "$@"

@@ -57,7 +57,7 @@ def getUserInput(releases):
     
     selection = int(input('\nSelect version to install: '))
     
-    if selection > len(releases) - 1:
+    if selection > len(releases):
         print('Invalid Choice')
         exit()
     
@@ -158,7 +158,7 @@ def removeVersion():
     if selection == 0:
         exit()
 
-    if selection > len(installedVersions - 1):
+    if selection > len(installedVersions):
         print('Invalid Choice')
         exit()
 

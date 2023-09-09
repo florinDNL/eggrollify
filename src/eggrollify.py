@@ -11,13 +11,17 @@ HOME = os.path.expanduser("~")
 TEMP_FOLDER = os.path.join(os.getcwd(), 'tempfolder')
 steamDir = ''
 
-if os.path.exists(os.path.join(HOME, '.steam')):
-    steamDir = os.path.join(HOME, '.steam')
-elif os.path.exists(os.path.join(HOME, '.local/share/steam')):
-    steamDir = os.path.join(HOME, '.local/share/steam')
-elif os.path.exists(os.path.join(HOME, 'snap/steam/common/.steam/steam')):
-    steamDir = os.path.join(HOME, 'snap/steam/common/.steam/steam')
-    
+steamDirs = [
+    '.steam',
+    '.local/share/steam',
+    'snap/steam/common/.steam/steam'
+    '.var/app/com.valvesoftware.Steam/data/Steam/'
+]
+
+for dir in steamDirs:
+    if os.path.exists(os.path.join(HOME, dir)):
+        steamDir = os.path.join(HOME, dir)
+
 if not os.path.exists(TEMP_FOLDER):
     os.makedirs(TEMP_FOLDER)
 

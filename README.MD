@@ -20,3 +20,7 @@ Script to download and install, list and remove Proton Glorious-Eggroll  builds
 `-r` will list all versions found locally in the steam folder and remove whichever is selected
 
 `-li` will simply list all versions found locally
+
+## Demo
+
+<img src="assets/demo.gif" alt="drawing" width="750"/>

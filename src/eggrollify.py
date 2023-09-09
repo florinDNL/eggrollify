@@ -110,6 +110,7 @@ def cleanTempDir():
     rm_files = glob.glob(os.path.join(TEMP_FOLDER, '*'), recursive=True)
     for f in rm_files:
         os.remove(f)
+    print('Temporary download deleted.')
 
 
 

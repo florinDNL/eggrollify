@@ -15,7 +15,9 @@ if os.path.exists(os.path.join(HOME, '.steam')):
     steamDir = os.path.join(HOME, '.steam')
 elif os.path.exists(os.path.join(HOME, '.local/share/steam')):
     steamDir = os.path.join(HOME, '.local/share/steam')
-
+elif os.path.exists(os.path.join(HOME, 'snap/steam/common/.steam/steam')):
+    steamDir = os.path.join(HOME, 'snap/steam/common/.steam/steam')
+    
 if not os.path.exists(TEMP_FOLDER):
     os.makedirs(TEMP_FOLDER)
 

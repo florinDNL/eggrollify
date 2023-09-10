@@ -31,4 +31,4 @@ Script to download and install, list and remove Proton Glorious-Eggroll  builds
 
 ## Demo
 
-<img src="assets/demo.gif" alt="drawing" width="750"/>
+<img src="assets/demo.gif" alt="drawing"/>

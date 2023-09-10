@@ -9,7 +9,15 @@ Script to download and install, list and remove Proton Glorious-Eggroll  builds
 
 ## Install
 
-- Make sure the pip requests package is installed
+### Ubuntu / Debian
+
+- `wget https://github.com/florinDNL/eggrollify/releases/latest/download/eggrollify.deb`
+
+- `sudo dpkg -i eggrollify.deb`
+
+### Other Distros
+
+- Make sure the python requests package is installed, e.g. on Arch: `pacman -S python-requests`
 - Clone the repo or download the script file(s) locally
 - (Optional) Add the bash script to the PATH for easier execution. Alternatively, you can run the python file directly
 

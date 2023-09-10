@@ -45,6 +45,15 @@ def getInstalledVersions():
 
 
 
+def isAlreadyInstalled(version):
+    installedVersions = getInstalledVersions()
+    if version in installedVersions:
+        return True
+    
+    return False
+
+
+
 def getEggrollReleases():
     URL = 'https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases'
     releases = requests.get(URL).json()
@@ -75,6 +84,12 @@ def getUserInput(releases):
 
 
 def getDownloadURL(selection, releases):
+    tagName = releases[selection - 1]['tag_name']
+
+    if isAlreadyInstalled(tagName):
+        print(f"Version {tagName} is already installed")
+        exit()
+
     assetsURL = releases[selection-1]['assets_url']
     assets = requests.get(assetsURL).json()
     downloadURL = assets[1]['browser_download_url']

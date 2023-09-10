@@ -1,0 +1,10 @@
+Package: eggrollify
+Version: 0.0.1
+Architecture: all
+Maintainer: Florin Danila<dalianflorin@gmail.com>
+Installed-Size: 2
+Depends: python3, python3-requests
+Section: extras
+Priority: optional
+Homepage: https://github.com/florinDNL/eggrollify
+Description: Script to download and install, list and remove Proton Glorious-Eggroll builds

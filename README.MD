@@ -1,5 +1,5 @@
 # Eggrollify
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/florinDNL/eggrollify/blob/main/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/florinDNL/eggrollify/blob/main/LICENSE) [![Build Status](https://dev.azure.com/florinDNL/eggrollify/_apis/build/status%2FflorinDNL.eggrollify?branchName=main)](https://dev.azure.com/florinDNL/eggrollify/_build/latest?definitionId=6&branchName=main) ![Release Status](https://vsrm.dev.azure.com/florinDNL/_apis/public/Release/badge/8d5fa5d3-522f-42e2-9dd3-69babfa409a9/3/4)
 
 Script to download and install, list and remove Proton Glorious-Eggroll  builds
 

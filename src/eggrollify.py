@@ -3,12 +3,13 @@ import sys
 import glob
 import shutil
 import tarfile
+import tempfile
 import argparse
 import requests
 
 
 HOME = os.path.expanduser("~")
-TEMP_FOLDER = os.path.join(os.getcwd(), 'tempfolder')
+TEMP_FOLDER = tempfile.gettempdir()
 steamDir = ''
 
 steamDirs = [
@@ -127,23 +128,21 @@ def download(url: str):
 
 
 
-def cleanTempDir():
-    rm_files = glob.glob(os.path.join(TEMP_FOLDER, '*'), recursive=True)
-    for f in rm_files:
-        os.remove(f)
-    print('Temporary download deleted.')
+def cleanTempDir(filepath):
+    os.remove(filepath)
+    print(f'Temporary download {filepath} deleted.')
 
 
 
 def decompressTarBall(tarball):    
     archive = tarfile.open(tarball)
 
-    print('\nExtracting Proton-GE build')
+    print(f'\nExtracting {tarball} build')
 
     archive.extractall(COMPAT_DIR)
     archive.close
 
-    print(f'\nProton-GE build installed to {COMPAT_DIR}')
+    print(f"\n{tarball.split('/')[-1].split('.')[0]} build installed to {COMPAT_DIR}")
 
 
 
@@ -156,7 +155,7 @@ def installVersion():
 
     decompressTarBall(tarball)
 
-    cleanTempDir()
+    cleanTempDir(tarball)
 
 
 

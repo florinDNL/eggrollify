@@ -1,12 +1,23 @@
 import os
 import sys
-import glob
+import time
+import psutil
 import shutil
 import tarfile
 import tempfile
 import argparse
 import requests
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 HOME = os.path.expanduser("~")
 TEMP_FOLDER = tempfile.gettempdir()
@@ -27,7 +38,7 @@ if not os.path.exists(TEMP_FOLDER):
     os.makedirs(TEMP_FOLDER)
 
 if not steamDir:
-    print('Steam directory not found. Is Steam installed?')
+    print(f'{bcolors.FAIL}Steam directory not found. Is Steam installed?{bcolors.ENDC}')
     exit()
 
 COMPAT_DIR = os.path.join(steamDir, 'steam/compatibilitytools.d')
@@ -49,8 +60,7 @@ def getInstalledVersions():
 def isAlreadyInstalled(version):
     installedVersions = getInstalledVersions()
     if version in installedVersions:
-        return True
-    
+        return True    
     return False
 
 
@@ -58,7 +68,6 @@ def isAlreadyInstalled(version):
 def getEggrollReleases():
     URL = 'https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases'
     releases = requests.get(URL).json()
-
     return releases
 
 
@@ -74,7 +83,7 @@ def getUserInput(releases):
     selection = int(input('\nSelect version to install: '))
     
     if selection > len(releases):
-        print('Invalid Choice')
+        print(f'{bcolors.FAIL}Invalid Choice{bcolors.ENDC}')
         exit()
     
     if selection == 0:
@@ -88,7 +97,7 @@ def getDownloadURL(selection, releases):
     tagName = releases[selection - 1]['tag_name']
 
     if isAlreadyInstalled(tagName):
-        print(f"Version {tagName} is already installed")
+        print(f"{bcolors.WARNING}Version {tagName} is already installed{bcolors.ENDC}")
         exit()
 
     assetsURL = releases[selection-1]['assets_url']
@@ -109,7 +118,7 @@ def download(url: str):
     if r.ok:
         dl = 0
         length = int(length)
-        print(f"Downloading {filename} to {TEMP_FOLDER}")        
+        print(f"{bcolors.BOLD}Downloading {filename} to {bcolors.UNDERLINE}{TEMP_FOLDER}{bcolors.ENDC}")        
         with open(file_path, 'wb') as f:        
             for chunk in r.iter_content(chunk_size=1024 * 1024):
                 if chunk:
@@ -130,19 +139,19 @@ def download(url: str):
 
 def cleanTempDir(filepath):
     os.remove(filepath)
-    print(f'Temporary download {filepath} deleted.')
+    print(f'{bcolors.OKCYAN}Temporary download {bcolors.UNDERLINE}{filepath}{bcolors.ENDC} deleted.{bcolors.ENDC}')
 
 
 
 def decompressTarBall(tarball):    
     archive = tarfile.open(tarball)
 
-    print(f'\nExtracting {tarball} build')
+    print(f'\n{bcolors.BOLD}Extracting {bcolors.UNDERLINE}{tarball}{bcolors.ENDC} build{bcolors.ENDC}')
 
     archive.extractall(COMPAT_DIR)
     archive.close
 
-    print(f"\n{tarball.split('/')[-1].split('.')[0]} build installed to {COMPAT_DIR}")
+    print(f"{bcolors.OKGREEN}\n{tarball.split('/')[-1].split('.')[0]} build installed to {bcolors.UNDERLINE}{COMPAT_DIR}{bcolors.ENDC}")
 
 
 
@@ -156,6 +165,7 @@ def installVersion():
     decompressTarBall(tarball)
 
     cleanTempDir(tarball)
+    steamRestartPrompt()
 
 
 
@@ -163,7 +173,7 @@ def removeVersion():
     installedVersions = getInstalledVersions()
 
     if not installedVersions:
-        print('No installed GE versions found')
+        print(f'{bcolors.FAIL}No installed GE versions found{bcolors.ENDC}')
         exit()
     
     count = 1
@@ -180,14 +190,49 @@ def removeVersion():
         exit()
 
     if selection > len(installedVersions):
-        print('Invalid Choice')
+        print(f'{bcolors.FAIL}Invalid Choice{bcolors.ENDC}')
         exit()
 
     dirToRemove = os.path.join(COMPAT_DIR, installedVersions[selection - 1])
 
     print(f'Removing {installedVersions[selection - 1]}')
     shutil.rmtree(dirToRemove)
-    print('Complete')
+    print(f'{bcolors.OKGREEN}Complete{bcolors.ENDC}')
+    steamRestartPrompt()
+
+
+
+def isSteamRunning():
+    proc = psutil.process_iter()
+    for p in proc:
+        if p.name() == 'steam':
+            return p
+    return False
+
+
+
+def restartSteam(proc):
+    print(f'{bcolors.OKCYAN}Steam is restarting{bcolors.ENDC}')
+    proc.terminate()
+    while True:
+        try: 
+            proc.status()
+            time.sleep(0.1)
+        except:            
+            os.system('nohup steam > /dev/null 2>&1 &')
+            print(f'{bcolors.OKGREEN}Steam restarted{bcolors.ENDC}')
+            break
+	
+
+
+
+def steamRestartPrompt():
+    yesAnswers = ['y', 'yes']
+    p = isSteamRunning()
+    if p:
+        i = input(f'{bcolors.WARNING}Found steam process running. Restart now? y/N{bcolors.ENDC}')
+        if i.lower() in yesAnswers:
+            restartSteam(p)
 
 
 

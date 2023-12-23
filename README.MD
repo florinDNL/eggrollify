@@ -6,6 +6,7 @@ Script to download and install, list and remove Proton Glorious-Eggroll  builds
 ## Requirements
 
 - [Python Requests](https://pypi.org/project/requests/)
+- [Python psutil](https://pypi.org/project/psutil/)
 
 ## Install
 

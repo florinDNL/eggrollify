@@ -3,7 +3,7 @@ Version: 0.0.4
 Architecture: all
 Maintainer: Florin Danila<dalianflorin@gmail.com>
 Installed-Size: 2
-Depends: python3, python3-requests
+Depends: python3, python3-requests, python3-psutil
 Section: extras
 Priority: optional
 Homepage: https://github.com/florinDNL/eggrollify

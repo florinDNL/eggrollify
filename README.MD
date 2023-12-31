@@ -18,7 +18,7 @@ Script to download and install, list and remove Proton Glorious-Eggroll  builds
 
 ### Other Distros
 
-- Make sure the python requests package is installed, e.g. on Arch: `pacman -S python-requests`
+- Make sure the python requests and psutil packages are installed, e.g. on Arch: `pacman -S python-requests python-psutil`
 - Clone the repo or download the script file(s) locally
 - (Optional) Add the bash script to the PATH for easier execution. Alternatively, you can run the python file directly
 

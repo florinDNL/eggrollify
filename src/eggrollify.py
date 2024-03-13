@@ -33,6 +33,7 @@ steamDirs = [
 for dir in steamDirs:
     if os.path.exists(os.path.join(HOME, dir)):
         steamDir = os.path.join(HOME, dir)
+    break
 
 if not os.path.exists(TEMP_FOLDER):
     os.makedirs(TEMP_FOLDER)

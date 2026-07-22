@@ -103,7 +103,10 @@ def getDownloadURL(selection, releases):
 
     assetsURL = releases[selection-1]['assets_url']
     assets = requests.get(assetsURL).json()
-    downloadURL = assets[1]['browser_download_url']
+
+    for asset in assets:
+        if '.tar.gz' in asset['name'] and 'aarch64' not in asset['name']:
+            downloadURL = asset['browser_download_url']
 
     return downloadURL
 
@@ -213,16 +216,24 @@ def isSteamRunning():
 
 
 def restartSteam(proc):
-    print(f'{bcolors.OKCYAN}Steam is restarting{bcolors.ENDC}')
+    print(f'{bcolors.OKCYAN}Terminating Steam process{bcolors.ENDC}')
     proc.terminate()
     while True:
         try: 
             proc.status()
             time.sleep(0.1)
-        except:            
-            os.system('nohup steam > /dev/null 2>&1 &')
-            print(f'{bcolors.OKGREEN}Steam restarted{bcolors.ENDC}')
+        except:
+            print(f'{bcolors.OKGREEN}Steam terminated. Restarting...{bcolors.ENDC}')
+            os.system('nohup steam > /dev/null 2>&1 &')         
+            
+            while True:
+                if not isSteamRunning:
+                    time.sleep(0.1)
+                else:
+                    break
             break
+            
+    print(f'{bcolors.OKGREEN}Steam restarted.{bcolors.ENDC}')
 	
 
 
